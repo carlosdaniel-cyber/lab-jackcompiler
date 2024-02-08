@@ -10,16 +10,13 @@ public enum TokenType {
      NUMBER,
      STRING,
 
-
      IDENT,
 
- 
      // keywords
-     METHOD,
-     WHILE,
-     IF,
-     CLASS,
-     CONSTRUCTOR,
+     WHILE, CLASS,CONSTRUCTOR,FUNCTION,
+     METHOD,FIELD,STATIC,VAR,INT,
+     CHAR,BOOLEAN,VOID,TRUE,FALSE,
+     NULL,THIS,LET,DO,IF,ELSE, RETURN,
 
      EOF,
 

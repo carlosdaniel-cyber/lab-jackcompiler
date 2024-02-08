@@ -3,10 +3,12 @@ public class Token {
 
     public final TokenType type;
     public final String lexeme;
+    public final int line;
 
-    public Token (TokenType type, String lexeme) {
+    public Token (TokenType type, String lexeme, int line) {
         this.type = type;
         this.lexeme = lexeme;
+        this.line = 0;
     }
 
     public String toString() {

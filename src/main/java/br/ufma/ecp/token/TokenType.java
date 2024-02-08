@@ -20,7 +20,20 @@ public enum TokenType {
 
      EOF,
 
-     ILLEGAL;
+     ILLEGAL,
+
+     // symbols
+    LPAREN,RPAREN,
+    LBRACE, RBRACE,
+    LBRACKET,RBRACKET,
+
+    COMMA, SEMICOLON, DOT,
+  
+    ASTERISK, SLASH,
+
+    AND, OR, NOT,
+
+    LT, GT, EQ ;
 
      static public boolean isSymbol (char c) {
         String symbols = "{}()[].,;+-*/&|<>=~";

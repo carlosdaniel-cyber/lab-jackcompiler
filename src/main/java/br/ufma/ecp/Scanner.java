@@ -41,13 +41,47 @@ public class Scanner {
         keywords.put("if", TokenType.IF);
         keywords.put("else", TokenType.ELSE);
         keywords.put("return", TokenType.RETURN);
-  }
+    }
     
     public Scanner (byte[] input) {
         this.input = input;
         current = 0;
         start = 0;
     }
+
+    private void skipLineComments() {
+        for (char ch = peek(); ch != '\n' && ch != 0;  advance(), ch = peek()) ;
+    }
+
+    private void skipBlockComments() {
+        boolean endComment = false;
+        advance();
+        while (!endComment) {
+            advance();
+            char ch = peek();
+            if ( ch == 0) { // eof, lexical error
+                System.exit(1);
+            }
+         
+            if (ch == '*') {
+               for (ch = peek(); ch == '*';  advance(), ch = peek()) ;
+                if (ch == '/') {
+                    endComment = true;
+                    advance();
+                }
+            }
+
+        }
+    }
+
+    private char peekNext () {
+        int next = current + 1;
+        if ( next  < input.length) {
+            return (char)input[next];
+        } else {
+            return 0;
+        }
+   }
 
     private void skipWhitespace() {
         char ch = peek();
@@ -74,16 +108,23 @@ public class Scanner {
         }
 
         switch (ch) {
-            
-                
             case '"':
                 return string();
             case 0:
                 return new Token (EOF,"EOF");
 
-                case '/':
-                advance();
-                return new Token (TokenType.SLASH,"/");
+            case '/':
+                if (peekNext() == '/') {
+                    skipLineComments();
+                    return nextToken();
+                } else if (peekNext() == '*') {
+                    skipBlockComments();
+                    return nextToken();
+                }
+                else {
+                    advance();
+                    return new Token (TokenType.SLASH,"/");
+                }
 
             case '+':
                 advance();

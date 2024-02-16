@@ -28,6 +28,14 @@ public class Parser {
          
      }
 
+     public void parseDo() {
+        printNonTerminal("doStatement");
+        expectPeek(DO);
+        parseSubroutineCall();
+        expectPeek(SEMICOLON);
+        printNonTerminal("/doStatement");
+     }
+
        //identifier '(' ')'
        void parseSubroutineCall() {
         printNonTerminal("subroutineCall");

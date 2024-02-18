@@ -36,14 +36,10 @@ public class Parser {
         printNonTerminal("/doStatement");
      }
 
-       //identifier '(' ')'
        void parseSubroutineCall() {
-        printNonTerminal("subroutineCall");
         expectPeek(IDENT);
         expectPeek(LPAREN);
         expectPeek(RPAREN);
-        printNonTerminal("/subroutineCall");
-
      }
 
      void parseLet() {

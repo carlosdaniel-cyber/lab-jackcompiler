@@ -149,6 +149,18 @@ public class Parser {
         printNonTerminal("/whileStatement");
     }
 
+    void parseIf () {
+        printNonTerminal("ifStatement");
+        expectPeek(IF);
+        expectPeek(LPAREN);
+        parseExpression();
+        expectPeek(RPAREN);
+        expectPeek(LBRACE);
+        parseStatements();
+        expectPeek(RBRACE);
+        printNonTerminal("/ifStatement");
+    }
+
     void parseStatements () {
         printNonTerminal("statements");
         while (peekToken.type == WHILE ||
@@ -171,7 +183,9 @@ public class Parser {
             case DO:
                 parseDo();
                 break;
-        
+            case IF:
+                parseIf();
+                break;
             default:
                 break;
         }

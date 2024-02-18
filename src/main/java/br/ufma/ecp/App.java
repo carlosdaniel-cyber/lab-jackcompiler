@@ -22,7 +22,7 @@ public class App
                 let x = 5 * (3 + 4) / 2 - 10
 
                 while (condition) {
-                    do something;
+                    if (anotherCondition) do something;
                 }
                 """;;
         Scanner scan = new Scanner (input.getBytes());

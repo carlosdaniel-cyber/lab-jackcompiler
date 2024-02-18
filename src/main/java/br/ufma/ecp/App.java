@@ -20,6 +20,10 @@ public class App
                  * sla kkkkkkkkkkkkkkkkkkkkkkkkkkkkk
                 */
                 let x = 5 * (3 + 4) / 2 - 10
+
+                while (condition) {
+                    do something;
+                }
                 """;;
         Scanner scan = new Scanner (input.getBytes());
         for (Token tk = scan.nextToken(); tk.type != TokenType.EOF; tk = scan.nextToken()) {

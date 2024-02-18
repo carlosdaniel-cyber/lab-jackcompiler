@@ -137,6 +137,46 @@ public class Parser {
         printNonTerminal("/letStatement");
     }
 
+    void parseWhile () {
+        printNonTerminal("whileStatement");
+        expectPeek(WHILE);
+        expectPeek(LPAREN);
+        parseExpression();
+        expectPeek(RPAREN);
+        expectPeek(LBRACE);
+        parseStatements();
+        expectPeek(RBRACE);
+        printNonTerminal("/whileStatement");
+    }
+
+    void parseStatements () {
+        printNonTerminal("statements");
+        while (peekToken.type == WHILE ||
+        peekToken.type == LET ||
+        peekToken.type == DO) {
+            parseStatement();
+        }
+        
+        printNonTerminal("/statements");
+    }
+
+    void parseStatement() {
+        switch (peekToken.type) {
+            case LET:
+                parseLet();
+                break;
+            case WHILE:
+                parseWhile();
+                break;
+            case DO:
+                parseDo();
+                break;
+        
+            default:
+                break;
+        }
+    }
+
      void parseExpression() {
         printNonTerminal("expression");
         parseTerm ();

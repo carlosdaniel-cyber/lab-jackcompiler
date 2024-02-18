@@ -25,10 +25,65 @@ public class Parser {
  
  
      public void parse () {
-         
+         parseClass();
      }
 
-     public void parseDo() {
+     void parseClass() {
+        printNonTerminal("class");
+        expectPeek(CLASS);
+        expectPeek(IDENT);
+        expectPeek(LBRACE);
+        while (peekTokenIs(STATIC) || peekTokenIs(FIELD)) parseClassVarDec();
+        while (peekTokenIs(CONSTRUCTOR) || peekTokenIs(FUNCTION) || peekTokenIs(METHOD)) subroutineDec();
+        expectPeek(RBRACE);
+        printNonTerminal("/class");
+    }    
+    
+    void parseClassVarDec() {
+        printNonTerminal("VarDec");
+        expectPeek(STATIC, FIELD);
+        expectPeek(INT, CHAR, BOOLEAN, IDENT);
+        expectPeek(IDENT);
+
+        while (peekTokenIs(COMMA)) {
+            expectPeek(COMMA);
+            expectPeek(IDENT);
+        }
+
+        expectPeek(SEMICOLON);
+        printNonTerminal("/VarDec");
+    }
+
+    void parseParameterList (){
+        printNonTerminal("parameterList");
+
+            // caso a lista n esteja vazia
+            if (!peekTokenIs(RPAREN)) {
+                expectPeek(INT, CHAR, BOOLEAN, IDENT);
+                expectPeek(IDENT);            
+            }
+
+            while (peekTokenIs(COMMA)) {
+                expectPeek(COMMA);
+                expectPeek(INT, CHAR, BOOLEAN, IDENT);
+                expectPeek(IDENT);
+            }
+
+        printNonTerminal("/parameterList");
+    }
+
+    void subroutineDec() {
+        printNonTerminal("subroutineDec");
+        expectPeek(CONSTRUCTOR, FUNCTION, METHOD);
+        expectPeek(VOID, INT, CHAR, BOOLEAN, IDENT);
+        expectPeek(IDENT);
+        expectPeek(LPAREN);
+
+        printNonTerminal("/subroutineDec");
+        
+    }    
+
+    public void parseDo() {
         printNonTerminal("doStatement");
         expectPeek(DO);
         expectPeek(IDENT);

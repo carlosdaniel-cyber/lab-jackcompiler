@@ -21,10 +21,10 @@ public class App
                 */
                 let x = 5 * (3 + 4) / 2 - 10
                 """;;
-Scanner scan = new Scanner (input.getBytes());
-for (Token tk = scan.nextToken(); tk.type != TokenType.EOF; tk = scan.nextToken()) {
-        System.out.println(tk);
-}
+        Scanner scan = new Scanner (input.getBytes());
+        for (Token tk = scan.nextToken(); tk.type != TokenType.EOF; tk = scan.nextToken()) {
+                System.out.println(tk);
+        }
 
         /*
         Parser p = new Parser (input.getBytes());

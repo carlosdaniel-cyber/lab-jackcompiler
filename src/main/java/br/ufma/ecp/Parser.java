@@ -40,7 +40,7 @@ public class Parser {
     }    
     
     void parseClassVarDec() {
-        printNonTerminal("VarDec");
+        printNonTerminal("classVarDec");
         expectPeek(STATIC, FIELD);
         expectPeek(INT, CHAR, BOOLEAN, IDENT);
         expectPeek(IDENT);
@@ -51,7 +51,7 @@ public class Parser {
         }
 
         expectPeek(SEMICOLON);
-        printNonTerminal("/VarDec");
+        printNonTerminal("/classVarDec");
     }
 
     void parseParameterList (){
@@ -161,11 +161,24 @@ public class Parser {
         printNonTerminal("/ifStatement");
     }
 
+    void parseReturn () {
+        printNonTerminal("returnStatement");
+        expectPeek(RETURN);
+        if (!peekTokenIs(SEMICOLON)) {
+            parseExpression();
+        }
+        expectPeek(SEMICOLON);
+
+        printNonTerminal("/returnStatement");
+    }
+
     void parseStatements () {
         printNonTerminal("statements");
         while (peekToken.type == WHILE ||
         peekToken.type == LET ||
-        peekToken.type == DO) {
+        peekToken.type == DO ||
+        peekToken.type == IF ||
+        peekToken.type == RETURN) {
             parseStatement();
         }
         
@@ -185,6 +198,9 @@ public class Parser {
                 break;
             case IF:
                 parseIf();
+                break;
+            case RETURN:
+                parseReturn();
                 break;
             default:
                 break;

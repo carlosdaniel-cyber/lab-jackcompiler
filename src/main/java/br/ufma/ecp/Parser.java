@@ -31,15 +31,38 @@ public class Parser {
      public void parseDo() {
         printNonTerminal("doStatement");
         expectPeek(DO);
+        expectPeek(IDENT);
         parseSubroutineCall();
         expectPeek(SEMICOLON);
         printNonTerminal("/doStatement");
      }
 
-       void parseSubroutineCall() {
-        expectPeek(IDENT);
-        expectPeek(LPAREN);
-        expectPeek(RPAREN);
+
+    void parseExpressionList() {
+        printNonTerminal("expressionList");
+
+        if (!peekTokenIs(RPAREN)) parseExpression();
+        while (peekTokenIs(COMMA)) {
+            expectPeek(COMMA);
+            parseExpression();
+        }
+
+        printNonTerminal("/expressionList");
+    }
+
+    void parseSubroutineCall() {
+        if (peekTokenIs(LPAREN)) {
+            expectPeek(LPAREN);
+            parseExpressionList();
+            expectPeek(RPAREN);
+
+        } else {
+            expectPeek(DOT);
+            expectPeek(IDENT);
+            expectPeek(LPAREN);
+            parseExpressionList();
+            expectPeek(RPAREN);
+        }
      }
 
      void parseLet() {
